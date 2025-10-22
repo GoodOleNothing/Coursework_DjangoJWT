@@ -13,6 +13,7 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from celery.schedules import crontab
 
 load_dotenv(override=True)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
 
     'users',
+    'habits',
 
     'phonenumber_field',
 ]
@@ -182,15 +184,18 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://read-and-write.example.com",
-    "http://84.201.136.50",
-    "http://84.201.136.50:8000",
+    "https://moreCORSexamples",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
 
-# Stripe service
-STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
-STRIPE_BASE_URL = os.getenv("STRIPE_BASE_URL")
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-csrftoken',
+]
 
 # Настройки для Celery
 CELERY_BROKER_URL = os.getenv("REDIS_URL")  # URL-адрес брокера сообщений
@@ -199,5 +204,14 @@ CELERY_TIMEZONE = "Asia/Yekaterinburg"  # Часовой пояс для раб�
 CELERY_TASK_TRACK_STARTED = True  # Флаг отслеживания выполнения задач
 CELERY_TASK_TIME_LIMIT = 30 * 60  # Максимальное время на выполнение задачи
 
+CELERY_BEAT_SCHEDULE = {
+    'check-due-habits-every-minute': {
+        'task': 'habits.tasks.check_due_habits',
+        'schedule': 60.0,  # каждую минуту
+    },
+}
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Telegram
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
