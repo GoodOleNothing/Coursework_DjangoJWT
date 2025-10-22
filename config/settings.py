@@ -184,10 +184,18 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://read-and-write.example.com",
+    "https://moreCORSexamples",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
 
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-csrftoken',
+]
 
 # Настройки для Celery
 CELERY_BROKER_URL = os.getenv("REDIS_URL")  # URL-адрес брокера сообщений

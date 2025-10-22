@@ -9,6 +9,6 @@ router = DefaultRouter()
 router.register(r'', HabitViewSet, basename='habit')
 
 urlpatterns = [
+    path('public/', PublicHabitsList.as_view(), name='public'),
     path('', include(router.urls)),
-    path('public/', PublicHabitsList.as_view(), name='public-habits'),
 ]

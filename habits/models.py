@@ -11,7 +11,7 @@ User = settings.AUTH_USER_MODEL
 class Habit(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="habits")
     action = models.CharField(max_length=200)  # ДЕЙСТВИЕ
-    place = models.CharField(max_length=200, blank=True)  # МЕСТО
+    place = models.CharField(max_length=200)  # МЕСТО
     time = models.TimeField()  # ВРЕМЯ выполнения
     is_pleasant = models.BooleanField(default=False)  # признак приятной привычки
     related_habit = models.ForeignKey(

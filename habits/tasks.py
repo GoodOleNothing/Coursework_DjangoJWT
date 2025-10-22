@@ -39,14 +39,14 @@ def check_due_habits():
         if success:
             habit.last_reminder_sent = now_local
             habit.save(update_fields=['last_reminder_sent'])
+            return 'message sent'
 
 
 def build_message_for_habit(habit):
     text = f"<b>Напоминание о привычке</b>\n"
     text += f"Действие: <b>{habit.action}</b>\n"
+    text += f"Место: <b>{habit.place}</b>\n"
     text += f"Время: {habit.time.strftime('%H:%M')}\n"
-    if habit.place:
-        text += f"Место: {habit.place}\n"
     if habit.is_pleasant:
         text += "Это приятная привычка!\n"
     else:
