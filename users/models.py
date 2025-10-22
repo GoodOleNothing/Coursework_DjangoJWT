@@ -37,6 +37,13 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='users/avatars/', blank=True, null=True, verbose_name='Аватар')
     city = models.CharField(max_length=30, blank=True, null=True, verbose_name='Страна')
     is_active = models.BooleanField(default=True)
+    telegram_chat_id = models.CharField(
+        max_length=64,
+        blank=True,
+        null=True,
+        verbose_name='Telegram chat ID',
+        help_text='ID чата пользователя в Telegram для отправки напоминаний'
+    )
 
     objects = CustomUserManager()
 
@@ -49,4 +56,3 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
-
